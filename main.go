@@ -35,18 +35,20 @@ func main() {
 	log.Println("Logged in!")
 }
 
+// how to hash a password & store it in your database
 func hashPassword(password string) ([]byte, error) {
 	bs, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		return nil, fmt.Errorf("Error while generating bcrypt hash from password: %w", err)
+		return nil, fmt.Errorf("Error in hashPassword while generating bcrypt hash from password: %w", err)
 	}
 	return bs, nil
 }
 
+// pass in password from user & get hashed password for user to compare/see if they match
 func comparePassword(password string, hashedPass []byte) error {
 	err := bcrypt.CompareHashAndPassword(hashedPass, []byte(password))
 	if err != nil {
-		return fmt.Errorf("Invalid password: %w", err)
+		return fmt.Errorf("Error in comparePassword while comparing password: %w", err)
 	}
 	return nil
 }
